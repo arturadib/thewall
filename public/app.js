@@ -30,8 +30,20 @@ $$.document.add(error);
  *
  */
 var header = $$({}, 
-  '<div class="container"> <h1>The Wall</h1> </div>',
-  '& {margin-top:30px;}  & h1 {text-align:center;}'
+  '<div>\
+    <div class="container">\
+      <div class="four columns alpha">&nbsp;</div>\
+      <div class="twelve columns omega">\
+        <img src="img/logo.png"/>\
+        <span id="tagline">An <a href="http://agilityjs.com">agility.js</a> demo project</span>\
+      </div>\
+    </div>\
+   </div>',
+  '& {height:50px; background:#eaeaea; border-bottom:1px solid #ccc; margin-bottom:50px;}\
+   & img {margin-top:20px;}\
+   & a {text-decoration:none; color:#a33;}\
+   & a:hover {text-decoration:underline;}\
+   & #tagline {font-weight:bold; font-size:15px; margin-left:30px;}'
 );
 $$.document.add(header);
 
@@ -76,7 +88,7 @@ var profile = $$({
     style: 
       '& .center {text-align:center;}\
        & hr {margin-bottom:20px;}\
-       & input {width:150px;}\
+       & input {width:150px; background:#FBFFF0; }\
        & img {cursor:pointer; margin:10px 0;}\
        & div#name-show {display:none; font-weight:bold; cursor:pointer;}'
   },
@@ -141,13 +153,13 @@ var message = $$({
     format:
       '<div>\
         <h4>Your message</h4><hr/>\
-        <div>What do you wanna tell the world, in 140 characters? (Be kind!)</div>\
-        <textarea maxlength="140" data-bind="msg"/>\
+        <div>What do you wanna tell the world, in 140 characters?</div>\
+        <textarea maxlength="140" data-bind="msg" placeholder="Be kind! :)"/>\
         <button id="post">Post message</button>\
         <div style="clear:both">\
       </div>',
     style:
-      '& textarea {float:left; width:400px; min-height:40px; resize:none;}\
+      '& textarea {float:left; width:400px; min-height:40px; resize:none; background:#FBFFF0;}\
        & button {float left; margin-left:20px;}'
   },
   controller: {
