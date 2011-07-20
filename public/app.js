@@ -65,7 +65,9 @@ var profile = $$({
       '<div class="three columns alpha">\
         <h4>Profile</h4>\
         <hr/>\
+        <div>Avatar:</div>\
         <div class="center"><img data-bind="src avatarPath"/></div> \
+        <div>Pseudonym:</div>\
         <div id="name-input">\
           <input type="text" data-bind="name" placeholder="Enter your pseudonym"/>\
         </div>\
@@ -125,26 +127,27 @@ app.add(profile, '#root');
 var divider = $$({}, '<div class="one column">&nbsp</div>');
 app.add(divider, '#root');
 
-var wall = $$({}, '<div class="ten columns omega"/>');
+var wall = $$({}, '<div class="twelve columns omega"/>');
 app.add(wall, '#root');
 
 
 /************************************
  *
- * The Wall - input
+ * The Wall - message
  *
  */
-var input = $$({
-  model: {msg: ''},
+var message = $$({
+  model: {id:'', msg: ''},
   view: {
     format:
       '<div>\
         <h4>Your message</h4><hr/>\
+        <div>What do you wanna tell the world? (Be kind!)</div>\
         <textarea data-bind="msg"/>\
         <button>Post message</button>\
       </div>',
     style:
-      '& textarea {width:400px}'
+      '& textarea {width:400px; resize:none;}'
   },
   controller: {
     'click button': function(){
@@ -156,11 +159,16 @@ var input = $$({
         error.show('Message is empty');
         return;
       }
-      this.save(); // creates a new record since there is no model id
+      this.save(); // creates a new record since there is no model id      
+    },
+    'persist:save:success': function(){
+      // reset model to initial state
+      this.model.reset();
+      this.view.$('textarea').focus();
     }
   }
 }).persist($$.adapter.restful, {collection:'posts'});
-wall.add(input);
+wall.add(message);
 
 
 /************************************
