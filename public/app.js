@@ -3,7 +3,7 @@
  *
  * Error messages
  *
- * (red bar at top)
+ * (red bar, overlays at top)
  *
  */
 var error = $$({
@@ -12,7 +12,7 @@ var error = $$({
     format:'<div><span data-bind="msg"/> <span id="close">(Click anywhere to close)</span></div>', 
     style:'& {position:fixed; top:0; left:0; right:0; z-index:1000; background:#f55; color:white; display:none; padding:5px 15px;}  & #close {float:right;}' 
   },
-  controller: {},
+  controller: {},  
   // User-defined
   show: function(s){ 
     var self = this;
@@ -41,7 +41,7 @@ var header = $$({},
       </div>\
     </div>\
    </div>',
-  '& {height:50px; background:#ccc; border-bottom:1px solid #aaa; margin-bottom:50px;}\
+  '& {height:50px; background:#447; border-bottom:1px solid #113; margin-bottom:50px;}\
    & img {float:left; margin-top:15px;}\
    & #tagline {float:left; font-weight:bold; font-size:15px; margin-top:55px; margin-left:50px;}'
 );
@@ -189,6 +189,9 @@ var postInput = $$({
       // reset model to initial state
       this.model.reset();
       this.view.$('textarea').focus();
+    },
+    'persist:error': function(){
+      error.show('Error communicating with the server. Please try again soon.');
     }
   }
 }).persist($$.adapter.restful, {collection:'posts'});
@@ -221,7 +224,7 @@ var post = $$({
         <div style="clear:both"/>\
       </div>',
     style:
-      '& {background:#f5f5f5; border:1px solid #ddd; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; margin-bottom:15px; padding:10px 20px;}\
+      '& {background:#fff; border:1px solid #ddd; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; margin-bottom:15px; padding:10px 20px;}\
        & #mini-profile {text-align:center; width:80px; float:left;}\
        & #mini-profile img {width:64px;}\
        & #mini-profile #name {font-weight:bold;}\
@@ -269,6 +272,9 @@ var stream = $$({
     },
     'persist:stop': function(){
       this.view.$('#ajax img').hide();
+    },
+    'persist:error': function(){
+      error.show('Error communicating with the server. Please try again soon.');
     },
     'persist:gather:success': function(){
       var self = this;
