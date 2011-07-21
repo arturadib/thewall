@@ -296,11 +296,11 @@ wall.append(stream);
 
 /************************************
  *
- * Glues
+ * Inter-object glues
  *
  */
 
-// Glue post to stream
+// Glue postInput to stream
 postInput.bind('persist:save:success', function(){
   stream.refresh();
 });
