@@ -13,8 +13,15 @@ app.use(express.static(__dirname + '/public'));
 //
 // Data store
 //
-var posts = [];
-var id = 1;
+var defaultPost = {
+  msg: "It seems like our servers were restarted, so previous posts were lost. How about adding your own? :)",
+  avatarPath: "img/halloween_slimer_icon.png",
+  name:"TheWall-Bot",
+  time:(new Date()).getTime(),
+  id:1
+};
+var posts = [defaultPost];
+var id = 2;
 var MAXSIZE = 25;
 
 //
