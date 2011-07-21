@@ -62,7 +62,9 @@ $$.document.add(app);
 
 /************************************
  *
- * User profile (left area)
+ * User profile 
+ *
+ * (left area)
  *
  */
 var avatars = ["alien_halloween_icon.png", "avatar_frankenstein_halloween_monster_icon.png", "avatar_gomez_halloween_head_icon.png", "bat_halloween_icon.png", "casper_halloween_icon.png", 
@@ -132,7 +134,9 @@ app.add(profile, '#root');
 
 /****************************************************
  *
- * Divider and container for The Wall (right area)
+ * Divider and container for The Wall 
+ *
+ * (right area)
  *
  */
 var divider = $$({}, '<div class="one column">&nbsp</div>');
@@ -144,10 +148,12 @@ app.add(wall, '#root');
 
 /*****************************************
  *
- * The Wall - message (right area, top)
+ * The Wall - Post Input
+ *
+ * (right area, top)
  *
  */
-var message = $$({
+var postInput = $$({
   model: {msg: ''},
   view: {
     format:
@@ -186,12 +192,14 @@ var message = $$({
     }
   }
 }).persist($$.adapter.restful, {collection:'posts'});
-wall.add(message);
+wall.add(postInput);
 
 
-/************************************
+/******************************************************
  *
- * The Wall - stream (below message, right area)
+ * The Wall - Post Stream 
+ * 
+ * (below post input, right area)
  *
  */
 
@@ -219,34 +227,57 @@ var post = $$({
        & #mini-profile #name {font-weight:bold;}\
        & #content {margin-left:120px; position:relative;}\
        & #content #quote {position:absolute; top:10px; left:-10px; font-family:Georgia, serif; font-size:60px; color:#ccc;}\
-       & #content #msg {font-weight:bold; font-size:16px; margin-left:20px; margin-top:10px; margin-bottom:10px;}'
+       & #content #msg {font-weight:bold; font-size:16px; margin-left:20px; margin-top:10px; margin-bottom:10px;}\
+       & #content #time {color:#888;}'
   },
   controller:{
     'create': function(){
-      var timeago = 'Created some time ago';
+      var timeago = 'millennia ago';
       if (this.model.get('time')) {
-        timeago = $.timeago(new Date(parseInt(this.model.get('time'))));
+        var theTime = parseInt(this.model.get('time'));
+        timeago = $.timeago(new Date(theTime));
       }
       this.view.$('#time').text(timeago);
     }
   }
 }).persist($$.adapter.restful, {collection:'posts'});
 
-// Actual stream
-var stream = $$({}, '<div/>').persist().gather(post);
+// Actual stream, container of posts
+var stream = $$({}, '<div/>', {
+  'create': function(){
+    this.lastTime = 1;
+  },
+  'persist:gather:success': function(){
+    var self = this;
+    // Loops over gathered posts to get latest time signature
+    this.each(function(){
+      if (parseInt(this.model.get('time')) > self.lastTime) {
+        self.lastTime = parseInt(this.model.get('time'));
+      }
+    });
+  }
+}).persist();
 wall.add(stream);
 
 
 /************************************
  *
- * Final prep (glues, etc)
+ * Glues
  *
  */
 
-// Glue message-stream
-message.bind('persist:save:success', function(){
-  stream.empty();
-  stream.gather(post);
+// Glue post to stream
+postInput.bind('persist:save:success', function(){
+  stream.gather(post, {since: stream.lastTime});
 });
 
+
+/************************************
+ *
+ * "Doc ready"
+ *
+ */
+
+stream.gather(post);
 profile.focus();
+

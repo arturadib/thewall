@@ -37,7 +37,18 @@ app.post('/api/posts', function(req, res){
 // GET /api/posts
 //
 app.get('/api/posts', function(req, res){
-  res.send(posts);
+  if (req.query.since) {
+    var _posts = [];
+    posts.forEach(function(post){
+      if (post.time > req.query.since) {
+        _posts.push(post);
+      }
+    });
+    res.send(_posts);
+  }
+  else {
+    res.send(posts);
+  }
 });
 
 
