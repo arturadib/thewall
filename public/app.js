@@ -3,6 +3,8 @@
  *
  * Error messages
  *
+ * (red bar at top)
+ *
  */
 var error = $$({
   model: {msg:''}, 
@@ -41,8 +43,6 @@ var header = $$({},
    </div>',
   '& {height:50px; background:#ccc; border-bottom:1px solid #aaa; margin-bottom:50px;}\
    & img {float:left; margin-top:15px;}\
-   & a {text-decoration:none; color:#a33;}\
-   & a:hover {text-decoration:underline;}\
    & #tagline {float:left; font-weight:bold; font-size:15px; margin-top:55px; margin-left:50px;}'
 );
 $$.document.append(header);
@@ -91,7 +91,7 @@ var profile = $$({
       '& .center {text-align:center;}\
        & hr {margin-bottom:20px;}\
        & input {width:150px;}\
-       & img {cursor:pointer; margin:10px 0;}\
+       & img {cursor:pointer;;}\
        & div#name-show {display:none; font-weight:bold; cursor:pointer;}'
   },
   controller: {
@@ -142,7 +142,7 @@ app.append(profile, '#root');
 var divider = $$({}, '<div class="one column">&nbsp</div>');
 app.append(divider, '#root');
 
-var wall = $$({}, '<div class="twelve columns omega"/>');
+var wall = $$({}, '<div class="twelve columns omega"/>', '& {margin-bottom:30px;}');
 app.append(wall, '#root');
 
 
@@ -221,7 +221,7 @@ var post = $$({
         <div style="clear:both"/>\
       </div>',
     style:
-      '& {background:#f5f5f5; border:1px solid #ddd; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px; margin-bottom:30px; padding:10px 20px;}\
+      '& {background:#f5f5f5; border:1px solid #ddd; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; margin-bottom:15px; padding:10px 20px;}\
        & #mini-profile {text-align:center; width:80px; float:left;}\
        & #mini-profile img {width:64px;}\
        & #mini-profile #name {font-weight:bold;}\
@@ -243,18 +243,45 @@ var post = $$({
 }).persist($$.adapter.restful, {collection:'posts'});
 
 // Actual stream, container of posts
-var stream = $$({}, '<div/>', {
-  'create': function(){
-    this.lastTime = 1;
+var stream = $$({
+  model:{}, 
+  view:{
+    format: 
+      '<div>\
+        <div id="check"><a href="#">Check for new posts</a></div>\
+        <div id="ajax"><img src="img/ajax.gif"/></div>\
+        <div id="posts"/>\
+      </div>',
+    style: 
+      '& #check {text-align:center; background:#FFFFD3; border:1px solid #E3DF7C; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; margin-bottom:15px; padding:5px;}\
+       & #ajax {text-align:center; margin:10px; display:none;}'
   },
-  'persist:gather:success': function(){
-    var self = this;
-    // Loops over gathered posts to get latest time signature
-    this.each(function(){
-      if (parseInt(this.model.get('time')) > self.lastTime) {
-        self.lastTime = parseInt(this.model.get('time'));
-      }
-    });
+  controller:{
+    'create': function(){
+      this.lastTime = 1;
+    },
+    'click a': function(){
+      this.refresh();
+    },
+    'persist:start': function(){
+      this.view.$('#ajax').show();
+    },
+    'persist:stop': function(){
+      this.view.$('#ajax').hide();
+    },
+    'persist:gather:success': function(){
+      var self = this;
+      // Loops over gathered posts to get latest time signature
+      this.each(function(){
+        if (parseInt(this.model.get('time')) > self.lastTime) {
+          self.lastTime = parseInt(this.model.get('time'));
+        }
+      });
+    }
+  },
+  // User-defined
+  refresh: function(){
+    this.gather(post, 'prepend', '#posts', {since: stream.lastTime});
   }
 }).persist();
 wall.append(stream);
@@ -268,7 +295,7 @@ wall.append(stream);
 
 // Glue post to stream
 postInput.bind('persist:save:success', function(){
-  stream.gather(post, {since: stream.lastTime});
+  stream.refresh();
 });
 
 
@@ -278,6 +305,5 @@ postInput.bind('persist:save:success', function(){
  *
  */
 
-stream.gather(post);
+stream.refresh();
 profile.focus();
-

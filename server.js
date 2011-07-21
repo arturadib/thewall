@@ -24,9 +24,9 @@ app.post('/api/posts', function(req, res){
   var entry = req.body;
   entry.id = id++;
 
-  posts.unshift(entry); // most recent first
+  posts.push(entry);
   if (posts.length > MAXSIZE) {
-    posts.pop();
+    posts.shift();
   }
 
   // response
