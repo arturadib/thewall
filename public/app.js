@@ -254,7 +254,8 @@ var stream = $$({
       </div>',
     style: 
       '& #check {text-align:center; background:#FFFFD3; border:1px solid #E3DF7C; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; margin-bottom:15px; padding:5px;}\
-       & #ajax {text-align:center; margin:10px; display:none;}'
+       & #ajax {text-align:center; margin-top:-10px; height:25px; overflow:hidden;}\
+       & #ajax img {margin-top:-15px; display:none;}'
   },
   controller:{
     'create': function(){
@@ -264,10 +265,10 @@ var stream = $$({
       this.refresh();
     },
     'persist:start': function(){
-      this.view.$('#ajax').show();
+      this.view.$('#ajax img').show();
     },
     'persist:stop': function(){
-      this.view.$('#ajax').hide();
+      this.view.$('#ajax img').hide();
     },
     'persist:gather:success': function(){
       var self = this;
