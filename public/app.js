@@ -21,7 +21,7 @@ var error = $$({
   },
   hide: function(){ this.view.$().slideUp(100); }
 });
-$$.document.add(error);
+$$.document.append(error);
 
 
 /************************************
@@ -45,7 +45,7 @@ var header = $$({},
    & a:hover {text-decoration:underline;}\
    & #tagline {float:left; font-weight:bold; font-size:15px; margin-top:55px; margin-left:50px;}'
 );
-$$.document.add(header);
+$$.document.append(header);
 
 
 /************************************
@@ -57,7 +57,7 @@ var app = $$({},
   '<div class="container"> <div id="root" class="sixteen columns omega"/> </div>',
   '& {margin-top:20px;}'
 );
-$$.document.add(app);
+$$.document.append(app);
 
 
 /************************************
@@ -129,7 +129,7 @@ var profile = $$({
     this.view.$('input').focus();
   }
 });
-app.add(profile, '#root');
+app.append(profile, '#root');
 
 
 /****************************************************
@@ -140,10 +140,10 @@ app.add(profile, '#root');
  *
  */
 var divider = $$({}, '<div class="one column">&nbsp</div>');
-app.add(divider, '#root');
+app.append(divider, '#root');
 
 var wall = $$({}, '<div class="twelve columns omega"/>');
-app.add(wall, '#root');
+app.append(wall, '#root');
 
 
 /*****************************************
@@ -192,7 +192,7 @@ var postInput = $$({
     }
   }
 }).persist($$.adapter.restful, {collection:'posts'});
-wall.add(postInput);
+wall.append(postInput);
 
 
 /******************************************************
@@ -257,7 +257,7 @@ var stream = $$({}, '<div/>', {
     });
   }
 }).persist();
-wall.add(stream);
+wall.append(stream);
 
 
 /************************************
