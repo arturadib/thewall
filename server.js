@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 //
 var posts = [];
 var id = 1;
-var MAXSIZE = 100;
+var MAXSIZE = 25;
 
 //
 // POST /api/posts

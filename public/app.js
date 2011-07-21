@@ -35,15 +35,15 @@ var header = $$({},
       <div class="four columns alpha">&nbsp;</div>\
       <div class="twelve columns omega">\
         <img src="img/logo.png"/>\
-        <span id="tagline">An <a href="http://agilityjs.com">agility.js</a> demo project</span>\
+        <div id="tagline">An <a href="http://agilityjs.com">agility.js</a> demo project</div>\
       </div>\
     </div>\
    </div>',
-  '& {height:50px; background:#eaeaea; border-bottom:1px solid #ccc; margin-bottom:50px;}\
-   & img {margin-top:20px;}\
+  '& {height:50px; background:#ccc; border-bottom:1px solid #aaa; margin-bottom:50px;}\
+   & img {float:left; margin-top:15px;}\
    & a {text-decoration:none; color:#a33;}\
    & a:hover {text-decoration:underline;}\
-   & #tagline {font-weight:bold; font-size:15px; margin-left:30px;}'
+   & #tagline {float:left; font-weight:bold; font-size:15px; margin-top:55px; margin-left:50px;}'
 );
 $$.document.add(header);
 
@@ -62,7 +62,7 @@ $$.document.add(app);
 
 /************************************
  *
- * User profile
+ * User profile (left area)
  *
  */
 var avatars = ["alien_halloween_icon.png", "avatar_frankenstein_halloween_monster_icon.png", "avatar_gomez_halloween_head_icon.png", "bat_halloween_icon.png", "casper_halloween_icon.png", 
@@ -88,7 +88,7 @@ var profile = $$({
     style: 
       '& .center {text-align:center;}\
        & hr {margin-bottom:20px;}\
-       & input {width:150px; background:#FBFFF0; }\
+       & input {width:150px;}\
        & img {cursor:pointer; margin:10px 0;}\
        & div#name-show {display:none; font-weight:bold; cursor:pointer;}'
   },
@@ -130,9 +130,9 @@ var profile = $$({
 app.add(profile, '#root');
 
 
-/************************************
+/****************************************************
  *
- * Divider and container for The Wall
+ * Divider and container for The Wall (right area)
  *
  */
 var divider = $$({}, '<div class="one column">&nbsp</div>');
@@ -142,9 +142,9 @@ var wall = $$({}, '<div class="twelve columns omega"/>');
 app.add(wall, '#root');
 
 
-/************************************
+/*****************************************
  *
- * The Wall - message
+ * The Wall - message (right area, top)
  *
  */
 var message = $$({
@@ -152,14 +152,13 @@ var message = $$({
   view: {
     format:
       '<div>\
-        <h4>Your message</h4><hr/>\
         <div>What do you wanna tell the world, in 140 characters?</div>\
         <textarea maxlength="140" data-bind="msg" placeholder="Be kind! :)"/>\
         <button id="post">Post message</button>\
         <div style="clear:both">\
       </div>',
     style:
-      '& textarea {float:left; width:400px; min-height:40px; resize:none; background:#FBFFF0;}\
+      '& textarea {float:left; width:400px; min-height:40px; resize:none;}\
        & button {float left; margin-left:20px;}'
   },
   controller: {
@@ -192,7 +191,7 @@ wall.add(message);
 
 /************************************
  *
- * The Wall - stream
+ * The Wall - stream (below message, right area)
  *
  */
 
@@ -234,8 +233,15 @@ var post = $$({
 }).persist($$.adapter.restful, {collection:'posts'});
 
 // Actual stream
-var stream = $$({}, '<div><h4>Stream</h4><hr/></div>').persist().gather(post);
+var stream = $$({}, '<div/>').persist().gather(post);
 wall.add(stream);
+
+
+/************************************
+ *
+ * Final prep (glues, etc)
+ *
+ */
 
 // Glue message-stream
 message.bind('persist:save:success', function(){
@@ -243,10 +249,4 @@ message.bind('persist:save:success', function(){
   stream.gather(post);
 });
 
-
-/************************************
- *
- * Final prep
- *
- */
 profile.focus();
