@@ -182,7 +182,6 @@ var postInput = $$({
         return;
       }
       this.model.set(profile.model.get());
-      this.model.set({time:(new Date()).getTime()});
       this.save(); // creates a new record since there is no model id      
     },
     'persist:save:success': function(){

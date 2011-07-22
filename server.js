@@ -30,6 +30,7 @@ app.use(express.static(__dirname + '/public'));
 //
 app.post('/api/posts', function(req, res){
   var entry = req.body;
+  entry.time = (new Date()).getTime().toString();
 
   // db: save
   posts.save(entry, function(err, finalEntry){
