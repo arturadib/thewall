@@ -56,6 +56,15 @@ app.get('/api/posts', function(req, res){
   }
 });
 
+//
+// DELETE /api/posts/:id
+//
+app.del('/api/posts/:id', function(req, res){
+  posts.remove({_id: ObjectId(req.params.id)});
+  // response
+  res.send({}, 200);
+});
+
 app.listen(PORT);
 
 console.log('Listening on port '+PORT);
