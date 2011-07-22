@@ -10,12 +10,13 @@ var express = require('express')
   , Mongolian = require('mongolian')
   , ObjectId = require('mongolian').ObjectId;
 
-// Environment
-var MAXSIZE = 3; // # of posts per request
-var port = process.env.PORT || 8989;
-
+// Environment, constants, etc
+var MAXSIZE = 25 // # of posts per request
+  , PORT = process.env.PORT || 8989
+  , MONGO_AUTH = process.env.MONGO_AUTH || 'mongo://localhost:27017/thewall';
+  
 // MongoDB setup
-var db = (new Mongolian()).db('thewall');
+var db = (new Mongolian(MONGO_AUTH));
 var posts = db.collection('posts');
 
 // Express setup
@@ -55,6 +56,6 @@ app.get('/api/posts', function(req, res){
   }
 });
 
-app.listen(port);
+app.listen(PORT);
 
-console.log('Listening on port '+port);
+console.log('Listening on port '+PORT);
