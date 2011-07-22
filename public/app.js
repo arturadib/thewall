@@ -194,7 +194,7 @@ var postInput = $$({
       error.show('Error communicating with the server. Please try again soon.');
     }
   }
-}).persist($$.adapter.restful, {collection:'posts', id:'_id'});
+}).persist($$.adapter.restful, {collection:'posts', id:'_id', cache:false});
 wall.append(postInput);
 
 
@@ -258,7 +258,7 @@ var post = $$({
       }
     }
   }
-}).persist($$.adapter.restful, {collection:'posts', id:'_id'});
+}).persist($$.adapter.restful, {collection:'posts', id:'_id', cache:false});
 
 // Actual stream, container of posts
 var stream = $$({
