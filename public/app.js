@@ -305,7 +305,7 @@ var stream = $$({
   refresh: function(){
     this.gather(post, 'prepend', '#posts', {since: stream.lastTime});
   }
-}).persist();
+}).persist($$.adapter.restful, {cache:false});
 wall.append(stream);
 
 
