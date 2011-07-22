@@ -2,6 +2,7 @@
   "name": "thewall",
   "version": "0.0.1",
   "dependencies": {
-    "express": "2.3.5"
+    "express": "2.3.5",
+    "mongolian": "0.1.10"
   }
 }
