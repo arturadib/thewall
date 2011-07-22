@@ -231,7 +231,7 @@ var post = $$({
        & #mini-profile #name {font-weight:bold;}\
        & #content {margin-left:120px; position:relative;}\
        & #content #quote {position:absolute; top:10px; left:-10px; font-family:Georgia, serif; font-size:60px; color:#ccc;}\
-       & #content #msg {font-weight:bold; font-size:16px; margin-left:20px; margin-top:10px; margin-bottom:10px;}\
+       & #content #msg {font-weight:bold; font-size:16px; margin-left:20px; margin-top:10px; margin-bottom:10px; word-wrap:break-word;}\
        & #content #time {color:#888;}\
        & button#erase {display:none; position:absolute; bottom:-5px; right:10px;}'
   },
