@@ -79,7 +79,7 @@ var profile = $$({
       '<div class="three columns alpha">\
         <h4>Profile</h4>\
         <hr/>\
-        <div>Avatar:</div>\
+        <div>Avatar - click to change:</div>\
         <div class="center"><img data-bind="src avatarPath"/></div> \
         <div>Pseudonym:</div>\
         <div id="name-input">\
