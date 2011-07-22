@@ -250,7 +250,12 @@ var post = $$({
       this.view.$('button#erase').hide();
     },
     'click button#erase': function(){
-      var answer = confirm("Is this post offensive? If so, it's OK - go ahead and erase it!");
+      if (profile.model.get('name') !== 'goddess') {
+        error.show("This feature is restricted to super users!");
+        return;
+      }
+      
+      var answer = confirm("Are you sure?");
       if (answer) {
         this.destroy();
         this.erase();
