@@ -12,7 +12,7 @@ Node.js is used for the backend, MongoDB for the data store, and the [Skeleton b
 
 ## Getting started
 
-To start the server you'll need `node.js`. Run:
+To start the server you'll need `node.js` and a MongoDB server. Run:
 
     cd thewall/
     npm install
