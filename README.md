@@ -2,9 +2,13 @@
 
 Online demo: http://thewall.agilityjs.com
 
-The Wall is an [Agility.js](http://agilityjs.com) example app.  It lets you write on a virtual wall, anonymously. It uses MongoDB as the data store.
+The Wall is an [Agility.js](http://agilityjs.com) example app.  It lets anyone write on a virtual wall, anonymously.
 
-The app is under `public/app.js`, and contains the entire code. The [Skeleton boilerplate](http://www.getskeleton.com/) is used to make things look pretty.
+The entire browser-side code is under:
+
+    public/app.js
+
+Node.js is used for the backend, MongoDB for the data store, and the [Skeleton boilerplate](http://www.getskeleton.com/) to make things look pretty.
 
 ## Getting started
 
